@@ -1,3 +1,7 @@
+var searchBox = "", date = "", currentDate = "", currentTime = "", currentTemp = "", apiKey = "", xhr = "";
+
+window.addEventListener("DOMContentLoaded", main, false);
+
 function getId(id)
 {
 	return document.getElementById(id);
@@ -11,9 +15,14 @@ function WeatherData(day, currentTemp, highTemp, lowTemp)
 	this.lowTemp = lowTemp;
 }
 
-function getWeatherData(city)
+function getWeatherData(city, key)
 {
-	xhr.open("GET", "http://api.openweathermap.org/data/2.5/weather?q=Atlanta&&appid=f16e015e28c48786da3fd525dffe4905", true);
+	var requestURL = "http://api.openweathermap.org/data/2.5/weather?q=";
+	requestURL += city;
+	requestURL += "&units=imperial&appid=";
+	requestURL += key;
+
+	xhr.open("GET", requestURL, true);
 	xhr.send();
 }
 
@@ -21,20 +30,48 @@ function loadWeatherData()
 {
 	if(this.readyState === 4 && this.status === 200)
 	{
-		console.log9this.responseText;
+		currentTemp.innerHTML = JSON.parse(this.responseText).main.temp;
 	}
 }
 
-var date, currentDate, currentTime, currentTemp, apiKey, xhr;
+function runSearch()
+{
+	
+}
 
-date = new Date();
-currentDate = getId("current-date");
-currentTime = getId("current-time");
-currentTemp = getId("current-temp");
-apiKey = "f16e015e28c48786da3fd525dffe4905";
-xhr = new XMLHttpRequest();
-xhr.addEventListener("readystatechange", loadWeatherData, false);
+//for loaction initialization
+function getCoords()
+{
+	var coords = {};
+	if(navigator.geolocation)
+	{
+		navigator.geolocation.getCurrentPosition(function(pos){
+		coords.lat = pos.coords.latitude;
+		coords.lng = pos.coords.longitude;
+			
+		})
+	}
+	//default to London
+	else
+	{
+		coords.lat = 51.51;
+		coords.lng = -0.13;
+	}
+	return coords;
+}
 
-//currentDate.innerHTML = date.getDate();
-//currentTime.innerHTML = date.getTime();
-//currentTemp.innerHTML = "73";
+function main()
+{
+	searchBox = getId("search-box");
+	date = new Date();
+	currentDate = getId("current-date");
+	currentTime = getId("current-time");
+	currentTemp = getId("current-temp");
+	apiKey = "f16e015e28c48786da3fd525dffe4905";
+	xhr = new XMLHttpRequest();
+
+	searchBox.addEventListener("keydown", runSearch, false);
+	xhr.addEventListener("readystatechange", loadWeatherData, false);
+
+	console.log(getCoords());
+}

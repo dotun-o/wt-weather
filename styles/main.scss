@@ -1,6 +1,8 @@
 @import url("https://fonts.googleapis.com/css?family=Lato:100,300,400");
 
-$font-color: #cef;
+$white: #fff;
+$light-blue: #3cf;
+$dark-blue: #37f;
 
 $full-width: 480px;
 
@@ -18,14 +20,50 @@ $full-width: 480px;
 	font-family: "Lato", sans-serif;
 }
 
+h1, h2, h3, h4, h5, h6 {font-weight: 300;}
+
+input, button
+{
+	border-radius: 5px;
+	padding: 10px;
+}
+
 #wrapper
 {
-	margin: auto;
+	margin: 100px auto;
+	padding: 20px;
 	border-radius: 10px;
 	width: $full-width;
-	background: linear-gradient(0deg, #37f, #3cf);
-	color: $font-color;
+	background: linear-gradient(0deg, $light-blue, $dark-blue);
+	color: $white;
 	text-align: center;
+}
+
+#wrapper h1 {margin-bottom: 20px;}
+
+#search-area
+{
+	margin: auto;
+	width: ($full-width / 2);
+	overflow: hidden;
+}
+
+#search-area > * {float: left;}
+
+#search-box
+{
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+	width: 80%;
+}
+
+#search-button
+{
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+	width: 19%;
+	background: $light-blue;
+	color: $white;
 }
 
 #current-temp
