@@ -13,21 +13,28 @@ input, button {
   border-radius: 5px;
   padding: 10px; }
 
+a {
+  color: inherit; }
+
 #wrapper {
   margin: 100px auto;
-  padding: 20px;
+  padding: 20px 40px;
   border-radius: 10px;
-  width: 480px;
+  width: 400px;
   background: linear-gradient(0deg, #3cf, #37f);
+  font-size: 20px;
   color: #fff;
   text-align: center; }
 
 #wrapper h1 {
-  margin-bottom: 20px; }
+  font-size: 30px; }
+
+#wrapper section {
+  display: block;
+  margin: 20px auto; }
 
 #search-area {
-  margin: auto;
-  width: 240px;
+  max-width: 400px;
   overflow: hidden; }
 
 #search-area > * {
@@ -46,9 +53,16 @@ input, button {
   color: #fff; }
 
 #current-temp {
-  font-size: 200px;
-  line-height: 200px;
+  font-size: 150px;
+  line-height: 150px;
   font-weight: 100; }
 
-#projection > * {
-  display: inline-block; }
+#current-temp sup {
+  font-size: 50px; }
+
+/*#projection > *
+{
+	display: inline-block;
+}*/
+#credits {
+  font-size: 10px; }

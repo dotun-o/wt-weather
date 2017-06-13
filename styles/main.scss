@@ -1,10 +1,12 @@
 @import url("https://fonts.googleapis.com/css?family=Lato:100,300,400");
 
+$full-width: 400px;
+
+$base-font-size: 20px;
+
 $white: #fff;
 $light-blue: #3cf;
 $dark-blue: #37f;
-
-$full-width: 480px;
 
 @mixin box-reset
 {
@@ -28,23 +30,31 @@ input, button
 	padding: 10px;
 }
 
+a {color: inherit;}
+
 #wrapper
 {
 	margin: 100px auto;
-	padding: 20px;
+	padding: 20px 40px;
 	border-radius: 10px;
 	width: $full-width;
 	background: linear-gradient(0deg, $light-blue, $dark-blue);
+	font-size: $base-font-size;
 	color: $white;
 	text-align: center;
 }
 
-#wrapper h1 {margin-bottom: 20px;}
+#wrapper h1 {font-size: ($base-font-size * 1.5);}
+
+#wrapper section
+{
+	display: block;
+	margin: 20px auto;
+}
 
 #search-area
 {
-	margin: auto;
-	width: ($full-width / 2);
+	max-width: $full-width;
 	overflow: hidden;
 }
 
@@ -68,12 +78,19 @@ input, button
 
 #current-temp
 {
-	font-size: 200px;
-	line-height: 200px;
+	font-size: 150px;
+	line-height: 150px;
 	font-weight: 100;
 }
 
-#projection > *
+#current-temp sup
+{
+	font-size: 50px;
+}
+
+/*#projection > *
 {
 	display: inline-block;
-}
+}*/
+
+#credits {font-size: ($base-font-size / 2);}

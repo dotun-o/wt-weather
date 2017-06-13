@@ -1,4 +1,15 @@
-var searchBox = "", date = "", currentDate = "", currentTime = "", currentTemp = "", apiKey = "", xhr = "";
+var WeatherApp = {
+	searchBox: "",
+	searchButton: "",
+	city: "",
+	currentDate: "",
+	iconsUrl: "http://openweathermap.org/img/w/",
+	weatherIcon: "",
+	currentTemp: "",
+	currentConditions: "",
+	apiKey: "f16e015e28c48786da3fd525dffe4905",
+	xhr: ""
+}
 
 window.addEventListener("DOMContentLoaded", main, false);
 
@@ -7,71 +18,71 @@ function getId(id)
 	return document.getElementById(id);
 }
 
-function WeatherData(day, currentTemp, highTemp, lowTemp)
+/*function WeatherData(day, currentTemp, highTemp, lowTemp)
 {
 	this.day = day;
 	this.currentTemp = currentTemp;
 	this.highTemp = highTemp;
 	this.lowTemp = lowTemp;
-}
+}*/
 
-function getWeatherData(city, key)
+// weather data request
+function getWeatherData(queryCity)
 {
 	var requestURL = "http://api.openweathermap.org/data/2.5/weather?q=";
-	requestURL += city;
+	requestURL += queryCity;
 	requestURL += "&units=imperial&appid=";
-	requestURL += key;
+	requestURL += WeatherApp.apiKey;
 
-	xhr.open("GET", requestURL, true);
-	xhr.send();
+	WeatherApp.xhr.open("GET", requestURL, true);
+	WeatherApp.xhr.send();
 }
 
+// weather data response
 function loadWeatherData()
 {
 	if(this.readyState === 4 && this.status === 200)
 	{
-		currentTemp.innerHTML = JSON.parse(this.responseText).main.temp;
+		var payload = JSON.parse(this.responseText);
+
+		if(payload.cod === 200)
+		{
+			WeatherApp.city.innerHTML = payload.name;
+			WeatherApp.currentDate.innerHTML = new Date().toDateString();
+			WeatherApp.currentTemp.innerHTML = Math.round(payload.main.temp) + "<sup>&deg;F</sup>";
+
+			WeatherApp.weatherIcon.innerHTML = "<img src='" + WeatherApp.iconsUrl + payload.weather[0].icon + ".png' alt='Icon: " + payload.weather[0].main + "' />";
+
+			WeatherApp.currentConditions.innerHTML = payload.weather[0].description;
+		}
+		else
+		{
+			console.log(payload.message);
+		}
 	}
 }
 
 function runSearch()
 {
-	
-}
-
-//for loaction initialization
-function getCoords()
-{
-	var coords = {};
-	if(navigator.geolocation)
-	{
-		navigator.geolocation.getCurrentPosition(function(pos){
-		coords.lat = pos.coords.latitude;
-		coords.lng = pos.coords.longitude;
-			
-		})
-	}
-	//default to London
-	else
-	{
-		coords.lat = 51.51;
-		coords.lng = -0.13;
-	}
-	return coords;
+	var query = WeatherApp.searchBox.value;
+	query = query.replace(/[ ]/gi, "");
+	getWeatherData(query);
 }
 
 function main()
 {
-	searchBox = getId("search-box");
-	date = new Date();
-	currentDate = getId("current-date");
-	currentTime = getId("current-time");
-	currentTemp = getId("current-temp");
-	apiKey = "f16e015e28c48786da3fd525dffe4905";
-	xhr = new XMLHttpRequest();
+	WeatherApp.searchBox = getId("search-box");
+	WeatherApp.searchButton = getId("search-button");
+	WeatherApp.city = getId("city");
+	WeatherApp.currentDate = getId("current-date");
+	WeatherApp.weatherIcon = getId("weather-icon");
+	WeatherApp.currentTemp = getId("current-temp");
+	WeatherApp.currentConditions = getId("current-conditions");
+	WeatherApp.xhr = new XMLHttpRequest();
 
-	searchBox.addEventListener("keydown", runSearch, false);
-	xhr.addEventListener("readystatechange", loadWeatherData, false);
+	WeatherApp.searchButton.addEventListener("click", runSearch, false);
+	WeatherApp.xhr.addEventListener("readystatechange", loadWeatherData, false);
 
-	console.log(getCoords());
+	// initialize with a city
+	getWeatherData("London");
 }
