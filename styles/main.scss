@@ -1,0 +1,41 @@
+@import url("https://fonts.googleapis.com/css?family=Lato:100,300,400");
+
+$font-color: #cef;
+
+$full-width: 480px;
+
+@mixin box-reset
+{
+	margin: 0;
+	border: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+*
+{
+	@include box-reset;
+	font-family: "Lato", sans-serif;
+}
+
+#wrapper
+{
+	margin: auto;
+	border-radius: 10px;
+	width: $full-width;
+	background: linear-gradient(0deg, #37f, #3cf);
+	color: $font-color;
+	text-align: center;
+}
+
+#current-temp
+{
+	font-size: 200px;
+	line-height: 200px;
+	font-weight: 100;
+}
+
+#projection > *
+{
+	display: inline-block;
+}

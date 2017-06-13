@@ -1,0 +1,23 @@
+@import url("https://fonts.googleapis.com/css?family=Lato:100,300,400");
+* {
+  margin: 0;
+  border: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Lato", sans-serif; }
+
+#wrapper {
+  margin: auto;
+  border-radius: 10px;
+  width: 480px;
+  background: linear-gradient(0deg, #37f, #3cf);
+  color: #cef;
+  text-align: center; }
+
+#current-temp {
+  font-size: 200px;
+  line-height: 200px;
+  font-weight: 100; }
+
+#projection > * {
+  display: inline-block; }
