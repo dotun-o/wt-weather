@@ -13,6 +13,24 @@ var WeatherApp = {
 
 window.addEventListener("DOMContentLoaded", main, false);
 
+function main()
+{
+	WeatherApp.searchBox = getId("search-box");
+	WeatherApp.searchButton = getId("search-button");
+	WeatherApp.city = getId("city");
+	WeatherApp.currentDate = getId("current-date");
+	WeatherApp.weatherIcon = getId("weather-icon");
+	WeatherApp.currentTemp = getId("current-temp");
+	WeatherApp.currentConditions = getId("current-conditions");
+	WeatherApp.xhr = new XMLHttpRequest();
+
+	WeatherApp.searchButton.addEventListener("click", runSearch, false);
+	WeatherApp.xhr.addEventListener("readystatechange", loadWeatherData, false);
+
+	// initialize with a city
+	getWeatherData("London");
+}
+
 function getId(id)
 {
 	return document.getElementById(id);
@@ -57,7 +75,7 @@ function loadWeatherData()
 		}
 		else
 		{
-			console.log(payload.message);
+			alert(payload.message);
 		}
 	}
 }
@@ -69,20 +87,20 @@ function runSearch()
 	getWeatherData(query);
 }
 
-function main()
+function celToFah(value)
 {
-	WeatherApp.searchBox = getId("search-box");
-	WeatherApp.searchButton = getId("search-button");
-	WeatherApp.city = getId("city");
-	WeatherApp.currentDate = getId("current-date");
-	WeatherApp.weatherIcon = getId("weather-icon");
-	WeatherApp.currentTemp = getId("current-temp");
-	WeatherApp.currentConditions = getId("current-conditions");
-	WeatherApp.xhr = new XMLHttpRequest();
+	if(parseFloat(value))
+	{
+		var result = (parseFloat(value) * 9 / 5) + 32;
+		WeatherApp.currentTemp.innerHTML = Math.round(result) + "<sup>&deg;F</sup>";
+	}
+}
 
-	WeatherApp.searchButton.addEventListener("click", runSearch, false);
-	WeatherApp.xhr.addEventListener("readystatechange", loadWeatherData, false);
-
-	// initialize with a city
-	getWeatherData("London");
+function fahToCel(value)
+{
+	if(parseFloat(value))
+	{
+		var result = (parseFloat(value) - 32) * 5 / 9;
+		WeatherApp.currentTemp.innerHTML = Math.round(result) + "<sup>&deg;F</sup>";
+	}
 }

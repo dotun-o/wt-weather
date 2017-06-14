@@ -8,7 +8,7 @@
 
     <link rel="stylesheet" href="styles/main.css">
 
-    <title>What's The Weather?</title>
+    <title>What's The Weather? by Dotun</title>
 </head>
 
 <body>
