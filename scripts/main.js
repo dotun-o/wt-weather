@@ -1,6 +1,6 @@
 var WeatherApp = {
+	searchForm: "",
 	searchBox: "",
-	searchButton: "",
 	city: "",
 	currentDate: "",
 	iconsUrl: "http://openweathermap.org/img/w/",
@@ -15,8 +15,8 @@ window.addEventListener("DOMContentLoaded", main, false);
 
 function main()
 {
+	WeatherApp.searchForm = getId("search-form");
 	WeatherApp.searchBox = getId("search-box");
-	WeatherApp.searchButton = getId("search-button");
 	WeatherApp.city = getId("city");
 	WeatherApp.currentDate = getId("current-date");
 	WeatherApp.weatherIcon = getId("weather-icon");
@@ -24,11 +24,18 @@ function main()
 	WeatherApp.currentConditions = getId("current-conditions");
 	WeatherApp.xhr = new XMLHttpRequest();
 
-	WeatherApp.searchButton.addEventListener("click", runSearch, false);
+	WeatherApp.searchForm.addEventListener("submit", runSearch, false);
 	WeatherApp.xhr.addEventListener("readystatechange", loadWeatherData, false);
 
 	// initialize with a city
-	getWeatherData("London");
+	if(window.localStorage)
+	{
+		getWeatherData(localStorage.city);
+	}
+	else
+	{
+		getWeatherData("London");
+	}
 }
 
 function getId(id)
@@ -72,6 +79,11 @@ function loadWeatherData()
 			WeatherApp.weatherIcon.innerHTML = "<img src='" + WeatherApp.iconsUrl + payload.weather[0].icon + ".png' alt='Icon: " + payload.weather[0].main + "' />";
 
 			WeatherApp.currentConditions.innerHTML = payload.weather[0].description;
+
+			if(window.localStorage)
+			{
+				localStorage.city = payload.name;
+			}
 		}
 		else
 		{
@@ -80,8 +92,9 @@ function loadWeatherData()
 	}
 }
 
-function runSearch()
+function runSearch(e)
 {
+	e.preventDefault();
 	var query = WeatherApp.searchBox.value;
 	query = query.replace(/[ ]/gi, "");
 	getWeatherData(query);

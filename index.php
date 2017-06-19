@@ -16,10 +16,10 @@
         <h1>What's The Weather?</h1>
         
         <section>
-            <div id="search-area">
+            <form id="search-form">
                 <input id="search-box" type="text" placeholder="Type a city name" />
                 <button id="search-button">GO</button>
-            </div>
+            </form>
         </section>
 
         <section>

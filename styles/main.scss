@@ -52,13 +52,13 @@ a {color: inherit;}
 	margin: 20px auto;
 }
 
-#search-area
+#search-form
 {
 	max-width: $full-width;
 	overflow: hidden;
 }
 
-#search-area > * {float: left;}
+#search-form > * {float: left;}
 
 #search-box
 {
@@ -78,8 +78,8 @@ a {color: inherit;}
 
 #current-temp
 {
-	font-size: 150px;
-	line-height: 150px;
+	font-size: ($base-font-size * 7);
+	line-height: ($base-font-size * 7);
 	font-weight: 100;
 }
 
