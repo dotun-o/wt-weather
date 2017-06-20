@@ -98,7 +98,6 @@ function runSearch(e)
 	var query = WeatherApp.searchBox.value;
 	query = query.replace(/[ ]/gi, "");
 	getWeatherData(query);
-	WeatherApp.searchBox.blur();
 }
 
 function celToFah(value)
